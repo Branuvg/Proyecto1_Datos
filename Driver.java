@@ -7,7 +7,7 @@ public class Driver {
         Tokenizer tokenizer = new Tokenizer();
 
         // Definir la entrada
-        String input = "(DEFUN f (X) (COND ((EQUAL X 0) 1) ((LT X 0) 0) (T (f (SUB X 1)))))";
+        String input = "( + 1 5)";
 
         ArrayList<String> tokens = tokenizer.tokenize(input);
         tokenizer.processTokens(tokens);

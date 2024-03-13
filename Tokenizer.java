@@ -62,6 +62,8 @@ public class Tokenizer {
                     } else if (token.matches("-?\\d+")) {
                         // Es un número
                         stack.push("NUMBER");
+                    } else if (token.matches("[+\\-*/]")){
+                        stack.push("OPERATOR");
                     } else {
                         System.out.println("Token no reconocido: " + token);
                     }
