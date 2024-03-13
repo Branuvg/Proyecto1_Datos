@@ -1,75 +1,71 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Tokenizer {
-    private final String input;
-    private int position;
 
-    public Tokenizer(String input) {
-        this.input = input;
-        this.position = 0;
+    private Stack<String> stack;
+
+    public Tokenizer() {
+        this.stack = new Stack<>();
+    }
+    public Stack<String> getStack() {
+        return this.stack;
     }
 
-    public List<Token> tokenize() {
-        List<Token> tokens = new ArrayList<>();
-        while (position < input.length()) {
-            char currentChar = input.charAt(position);
-            if (Character.isWhitespace(currentChar)) {
-                position++;
-                continue;
-            }
-            if (Character.isDigit(currentChar)) {
-                tokens.add(readNumber());
-            } else if (Character.isLetter(currentChar)) {
-                tokens.add(readIdentifier());
+    public ArrayList<String> tokenize(String input) {
+        ArrayList<String> tokens = new ArrayList<>();
+        StringBuilder currentToken = new StringBuilder();
+
+        for (char c : input.toCharArray()) {
+            if (Character.isWhitespace(c)) {
+                if (currentToken.length() > 0) {
+                    tokens.add(currentToken.toString());
+                    currentToken.setLength(0);
+                }
+            } else if (c == '(' || c == ')') {
+                if (currentToken.length() > 0) {
+                    tokens.add(currentToken.toString());
+                    currentToken.setLength(0);
+                }
+                tokens.add(String.valueOf(c));
             } else {
-                tokens.add(new Token(Token.Type.OPERATOR, Character.toString(currentChar)));
-                position++;
+                currentToken.append(c);
             }
         }
+
+        if (currentToken.length() > 0) {
+            tokens.add(currentToken.toString());
+        }
+
         return tokens;
     }
 
-    private Token readNumber() {
-        StringBuilder sb = new StringBuilder();
-        while (position < input.length() && Character.isDigit(input.charAt(position))) {
-            sb.append(input.charAt(position));
-            position++;
+    public void processTokens(ArrayList<String> tokens) {
+        for (String token : tokens) {
+            // Eliminar paréntesis
+            if (token.equals("(") || token.equals(")")) {
+                continue; // Ignorar los paréntesis
+            }
+    
+            // Reconocer nombres de funciones, operadores y otros tokens
+            switch (token) {
+                case "DEFUN":
+                case "COND":
+                case "EQUAL":
+                case "LT":
+                case "GT":
+                    stack.push(token);
+                    break;
+                default:
+                    if (token.matches("[a-zA-Z]+")) {
+                        // Es un identificador
+                        stack.push("IDENTIFIER");
+                    } else if (token.matches("-?\\d+")) {
+                        // Es un número
+                        stack.push("NUMBER");
+                    } else {
+                        System.out.println("Token no reconocido: " + token);
+                    }
+            }
         }
-        return new Token(Token.Type.NUMBER, sb.toString());
-    }
-
-    private Token readIdentifier() {
-        StringBuilder sb = new StringBuilder();
-        while (position < input.length() && (Character.isLetterOrDigit(input.charAt(position)) || input.charAt(position) == '_')) {
-            sb.append(input.charAt(position));
-            position++;
-        }
-        String identifier = sb.toString();
-        switch (identifier) {
-            case "QUOTE":
-            case "'":
-                return new Token(Token.Type.QUOTE, identifier);
-            case "DEFUN":
-                return new Token(Token.Type.DEFUN, identifier);
-            case "SETQ":
-                return new Token(Token.Type.SETQ, identifier);
-            case "ATOM":
-                return new Token(Token.Type.ATOM, identifier);
-            case "LIST":
-                return new Token(Token.Type.LIST, identifier);
-            case "EQUAL":
-                return new Token(Token.Type.EQUAL, identifier);
-            case "<":
-                return new Token(Token.Type.LT, identifier);
-            case ">":
-                return new Token(Token.Type.GT, identifier);
-            case "COND":
-                return new Token(Token.Type.COND, identifier);
-            default:
-                return new Token(Token.Type.IDENTIFIER, identifier);
-        }
-    }
+    }    
 }
-
-
