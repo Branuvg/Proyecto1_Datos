@@ -41,12 +41,12 @@ public class Tokenizer {
 
     public void processTokens(ArrayList<String> tokens) {
         for (String token : tokens) {
-            // Eliminar paréntesis
+            //Eliminar paréntesis
             if (token.equals("(") || token.equals(")")) {
                 continue; // Ignorar los paréntesis
             }
     
-            // Reconocer nombres de funciones, operadores y otros tokens
+            //Reconocer tokens
             switch (token) {
                 case "DEFUN":
                 case "COND":
