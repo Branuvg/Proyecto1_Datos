@@ -1,32 +1,54 @@
 import java.util.ArrayList;
 
 public class Driver {
-
-public String quote(Stack<String> stack){
-    return stack.pop();
-}
-
-public void setQ(ArrayList<Variable> vars){
-    vars.add(new Variable());
-}
-
     public static void main(String[] args) {
-        ArrayList<Variable> vars = new ArrayList<Variable>();
-        // instancia tokenizer
         Tokenizer tokenizer = new Tokenizer();
+        Stack<String> stack = new Stack<>();
 
-        // Definir la entrada
-        String input = "( a + b = c)";
+        // pruebas
+        String command = "(5 + 1)";
+        ArrayList<String> tokens = tokenizer.Tokens(command);
+        System.out.println("Tokens: " + tokens);
 
-        ArrayList<String> tokens = tokenizer.tokenize(input);
-        tokenizer.processTokens(tokens);
+        for (String token : tokens) {
+            stack.push(token);
+        }
 
-        // Obtener el stack de Tokenizer y mostrar su contenido
-        Stack<String> stack = tokenizer.getStack();
+        System.out.println("Contenido de la pila:");
         while (!stack.isEmpty()) {
             System.out.println(stack.pop());
         }
+
+        int commandType = tokenizer.getCommandType(tokens);
+        String commandTypeName = getCommandTypeName(commandType);
+        System.out.println("Tipo de comando: " + commandTypeName);
+    }
+
+    // Método auxiliar para obtener el nombre del tipo de comando
+    private static String getCommandTypeName(int commandType) {
+        switch (commandType) {
+            case 1:
+                return "Asignación (setq)";
+            case 2:
+                return "AOP";
+            case 3:
+                return "PRINT";
+            case 4:
+                return ">";
+            case 5:
+                return "<";
+            case 6:
+                return "EQUAL";
+            case 7:
+                return "ATOM";
+            case 8:
+                return "LIST";
+            case 9:
+                return "COND";
+            case 10:
+                return "DEFUN";
+            default:
+                return "Tipo de Comando Desconocido";
+        }
     }
 }
-
-
