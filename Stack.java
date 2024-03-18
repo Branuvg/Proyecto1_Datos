@@ -46,8 +46,9 @@ public class Stack<T> implements UVGStack<T> {
     public boolean isEmpty() {
         return stack.isEmpty();
     }
-
-    public int size() {
+    
+    @Override
+    public int count() {
         return stack.size();
     }
 }

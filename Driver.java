@@ -7,7 +7,7 @@ public class Driver {
         Tokenizer tokenizer = new Tokenizer();
 
         // Definir la entrada
-        String input = "( + 1 5)";
+        String input = "( a + b = c)";
 
         ArrayList<String> tokens = tokenizer.tokenize(input);
         tokenizer.processTokens(tokens);
