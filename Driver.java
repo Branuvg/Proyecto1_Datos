@@ -2,7 +2,16 @@ import java.util.ArrayList;
 
 public class Driver {
 
+public String quote(Stack<String> stack){
+    return stack.pop();
+}
+
+public void setQ(ArrayList<Variable> vars){
+    vars.add(new Variable());
+}
+
     public static void main(String[] args) {
+        ArrayList<Variable> vars = new ArrayList<Variable>();
         // instancia tokenizer
         Tokenizer tokenizer = new Tokenizer();
 
