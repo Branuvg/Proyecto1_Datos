@@ -4,6 +4,7 @@ public class Operator {
 
     //esta clase debe ser intanciada como SmoothOperator
 
+<<<<<<< HEAD
     public void setQ(ArrayList<String> lisp){
         
     }
@@ -35,5 +36,7 @@ public class Operator {
         return cond;
     }
 
+=======
+>>>>>>> ee5f551df18c80f01902d641596dab6dc11a7c70
     
 }
