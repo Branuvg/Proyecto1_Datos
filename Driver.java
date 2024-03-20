@@ -6,7 +6,7 @@ public class Driver {
         Stack<String> stack = new Stack<>();
 
         // pruebas
-        String command = "(5 + 1)";
+        String command = "(defun name x,y (print x) (print y) (+ x y))";
         ArrayList<String> tokens = tokenizer.Tokens(command);
         System.out.println("Tokens: " + tokens);
 

@@ -34,4 +34,6 @@ public class Operator {
 
         return cond;
     }
+
+    
 }
