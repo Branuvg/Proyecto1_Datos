@@ -1,54 +1,37 @@
-/** Algoritmos y Estructuras de datos -  seccion 30
- * Luis Francisco Padilla Juárez - 23663
- * Gabrein Bran Bolaños - 23590
- * HT2, Stacks and Postfix
- * 31-01-2324
- * implementacion
- * @return Stack
- */
-
 import java.util.ArrayList;
-
 
 public class Stack<T> implements UVGStack<T> {
 
-    private ArrayList<T> stack;
+    private ArrayList<T> arrayList;
 
     public Stack() {
-        this.stack = new ArrayList<>();
+        arrayList = new ArrayList<T>();
     }
 
     @Override
-    public void push(T x) {
-        stack.add(x);
+    public void push(T value) {
+        arrayList.add(0,value);
     }
 
+    // pull
     @Override
     public T pop() {
-        if (isEmpty()) {
-            throw new UnsupportedOperationException("El Stack esta vacio");
-        }
-        int i = stack.size();
-        T ret = this.stack.get(i-1);
-        this.stack.remove(i-1);
-        return ret;
+        return arrayList.remove(0);
     }
 
+    // peek
     @Override
     public T top() {
-        if (isEmpty()) {
-            throw new UnsupportedOperationException("El Stack esta vacio");
-        }
-        return  stack.get(stack.size()-1);
+        return arrayList.get(0);
     }
 
     @Override
     public boolean isEmpty() {
-        return stack.isEmpty();
+        return arrayList.isEmpty();
     }
     
     @Override
     public int count() {
-        return stack.size();
+        return arrayList.size();
     }
 }
