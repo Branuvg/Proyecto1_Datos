@@ -6,7 +6,7 @@ public class Main {
         Stack<String> stack = new Stack<>();
 
         // pruebas
-        String command = "(defun name x,y (print x) (print y) (+ x y))";
+        String command = "(+ 5 4 (* 3 4))";
         ArrayList<String> tokens = tokenizer.Tokens(command);
         System.out.println("Tokens: " + tokens);
 
