@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Driver {
+public class Main {
     public static void main(String[] args) {
         Tokenizer tokenizer = new Tokenizer();
         Stack<String> stack = new Stack<>();
