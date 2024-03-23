@@ -3,9 +3,29 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         Tokenizer tokenizer = new Tokenizer();
-        Stack<String> stack = new Stack<>();
+        //Stack<String> stack = new Stack<>();
+        Leedor fileScanner = new Leedor();
+        String file = "Lisp.txt";
+        Interprete interprete = new Interprete();
+        ArrayList<ArrayList<String>> tokens = new ArrayList<ArrayList<String>>();
+        String var;
 
-        // pruebas
+        System.out.println("Bienvenido al interprete");
+        ArrayList<String> expresions = fileScanner.Parse(file);
+        for (String s: expresions) tokens.add(tokenizer.Tokens(s));
+        for (ArrayList<String> juan: tokens){
+            if (juan != null){
+                String expresion = "";
+                for (String s: juan) expresion += s + " ";
+                System.out.println(expresion);
+                var = interprete.operate(juan, tokenizer.getCommandType(juan));
+                System.out.println(var.toString());
+                System.out.println("\n");
+            }
+        }
+
+
+        /** pruebas
         String command = "(+ 5 4 (* 3 4))";
         ArrayList<String> tokens = tokenizer.Tokens(command);
         System.out.println("Tokens: " + tokens);
@@ -49,6 +69,6 @@ public class Main {
                 return "DEFUN";
             default:
                 return "Tipo de Comando Desconocido";
-        }
+        }**/
     }
 }
