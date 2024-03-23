@@ -1,16 +1,15 @@
-(setq vara 10)
-(setq varb * 10 3)
+(setq vara 5)
+(setq varb * 5 3)
 (setq varc + vara varb)
 
-(* (+ 5 6) (+ 4 9))
-(+ 5 9)
-(+ (* 9 4) (* 3 2))
-(* (* 9 4) (* 3 2))
-(- (* 9 4) (* 3 2))
+(+ (* 5 3) (* 5 1))
+(- (* 5 3) (* 5 1))
+(* (* 5 3) (* 5 1))
+(/ (* 5 3) (* 5 1))
+
 
 (+ vara 5)
-(quote 5)
-(' Esto es una prueba)
+(quote 2)
 
 (> 10 5)
 (equals 10 10)
