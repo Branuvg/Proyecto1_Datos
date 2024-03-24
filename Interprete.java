@@ -35,7 +35,7 @@ public class Interprete {
                 if (option == 1)
                     return newVariable(commands);
                 else if (option == 2)
-                    return PrefixCalculator.calcularPrefijo(expresion) + "";
+                    return PrefixCalc.calcularPrefijo(expresion) + "";
                 else if (option == 3)
                     return quote(expresion);
                 else if (option == 4)
