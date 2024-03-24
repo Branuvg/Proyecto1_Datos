@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class Operator {
 
@@ -78,7 +77,7 @@ public class Operator {
             i++;
         }
         if ((analyse.length - i) <= 1) {
-            atom = "T";
+            atom = "True";
         }
         return atom;
     }
@@ -91,7 +90,7 @@ public class Operator {
             i++;
         }
         if ((analyse.length - i) <= 1) {
-            list = "T";
+            list = "True";
         }
         return list;
     }

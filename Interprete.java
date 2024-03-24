@@ -33,7 +33,7 @@ public class Interprete {
                 if (option == 1)
                     return setQ(commands);
                 else if (option == 2)
-                    return PrefixCalc.calcularPrefijo(expresion) + "";
+                    return PrefixCalculator.calcularPrefijo(expresion) + "";
                 else if (option == 3)
                     return quote(expresion);
                 else if (option == 4)
@@ -258,7 +258,7 @@ public class Interprete {
 
             
             if (condCount == 2)
-                if (operate(convertToArrayList(condition), tokenizer.getCommandType(convertToArrayList(condition))).equals("verdadero"))
+                if (operate(convertToArrayList(condition), tokenizer.getCommandType(convertToArrayList(condition))).equals("True"))
                     optimizar = true;
             if (!isHere(getInstructions(), lisp.get(i)) && condCount != 2){
                 condition += lisp.get(i) + " ";
@@ -319,7 +319,7 @@ public class Interprete {
                 break;
             }
         }
-        if (operate(convertToArrayList(condition), tokenizer.getCommandType(convertToArrayList(condition))).equals("verdadero"))
+        if (operate(convertToArrayList(condition), tokenizer.getCommandType(convertToArrayList(condition))).equals("True"))
             conditional = operate(convertToArrayList(positive), tokenizer.getCommandType(convertToArrayList(positive))); //Condicion positiva
         else
             conditional = operate(convertToArrayList(negative), tokenizer.getCommandType(convertToArrayList(negative))); //Condicion negativa

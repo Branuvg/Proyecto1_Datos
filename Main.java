@@ -10,7 +10,7 @@ public class Main {
         ArrayList<ArrayList<String>> tokens = new ArrayList<ArrayList<String>>();
         String var;
 
-        System.out.println("Bienvenido al interprete");
+        System.out.println("Interprete de LISP");
         ArrayList<String> expresions = fileScanner.Parse(file);
         for (String s: expresions) tokens.add(tokenizer.Tokens(s));
         for (ArrayList<String> juan: tokens){
