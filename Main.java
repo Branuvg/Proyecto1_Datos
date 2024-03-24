@@ -1,9 +1,23 @@
 import java.util.ArrayList;
 
+/**
+ * Clase principal que inicia el intérprete de LISP.
+ * 
+ * @author Gabriel Bran
+ * @author David Dominguez
+ * @author Luis Padilla
+ * @since 2024-03-23
+ * @version 1.0
+ */
 public class Main {
+
+    /**
+     * Método principal que inicia el programa.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados en este caso).
+     */
     public static void main(String[] args) {
         Tokenizer tokenizer = new Tokenizer();
-        //Stack<String> stack = new Stack<>();
         Leedor fileScanner = new Leedor();
         String file = "Lisp.txt";
         Interprete interprete = new Interprete();
@@ -11,64 +25,25 @@ public class Main {
         String var;
 
         System.out.println("Interprete de LISP");
+
+        // Lee el archivo de LISP y obtiene las expresiones
         ArrayList<String> expresions = fileScanner.Parse(file);
-        for (String s: expresions) tokens.add(tokenizer.Tokens(s));
-        for (ArrayList<String> juan: tokens){
-            if (juan != null){
+
+        // Tokeniza cada expresión y realiza la interpretación
+        for (String s : expresions) {
+            tokens.add(tokenizer.Tokens(s));
+        }
+        for (ArrayList<String> juan : tokens) {
+            if (juan != null) {
                 String expresion = "";
-                for (String s: juan) expresion += s + " ";
+                for (String s : juan) expresion += s + " ";
                 System.out.println(expresion);
+
+                // Realiza la interpretación de la expresión y muestra el resultado
                 var = interprete.operate(juan, tokenizer.getCommandType(juan));
                 System.out.println(var.toString());
                 System.out.println("\n");
             }
         }
-
-
-        /** pruebas
-        String command = "(+ 5 4 (* 3 4))";
-        ArrayList<String> tokens = tokenizer.Tokens(command);
-        System.out.println("Tokens: " + tokens);
-
-        for (String token : tokens) {
-            stack.push(token);
-        }
-
-        System.out.println("Contenido de la pila:");
-        while (!stack.isEmpty()) {
-            System.out.println(stack.pop());
-        }
-
-        int commandType = tokenizer.getCommandType(tokens);
-        String commandTypeName = getCommandTypeName(commandType);
-        System.out.println("Tipo de comando: " + commandTypeName);
-    }
-
-    // Método auxiliar para obtener el nombre del tipo de comando
-    private static String getCommandTypeName(int commandType) {
-        switch (commandType) {
-            case 1:
-                return "Asignación (setq)";
-            case 2:
-                return "AOP";
-            case 3:
-                return "PRINT";
-            case 4:
-                return ">";
-            case 5:
-                return "<";
-            case 6:
-                return "EQUAL";
-            case 7:
-                return "ATOM";
-            case 8:
-                return "LIST";
-            case 9:
-                return "COND";
-            case 10:
-                return "DEFUN";
-            default:
-                return "Tipo de Comando Desconocido";
-        }**/
     }
 }

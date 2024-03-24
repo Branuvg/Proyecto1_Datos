@@ -1,69 +1,84 @@
 import java.util.Arrays;
 
+/**
+ * Clase que proporciona funcionalidad para calcular expresiones en notación prefija.
+ * Esta clase realiza cálculos básicos como suma, resta, multiplicación y división.
+ * Además, maneja errores como la división por cero y la falta de operandos u operadores.
+ *
+ * @author Gabriel Bran
+ * @author David Dominguez
+ * @author Luis Padilla
+ * @since 2024-03-23
+ * @version 1.0
+ */
 public class PrefixCalc {
 
-    private static String[] operators = { "+", "-", "*", "/" };
-    private Stack<Integer> stack;
+    private static String[] operators = {"+", "-", "*", "/"}; // Lista de operadores permitidos
+    private Stack<Integer> stack; // Pila utilizada para realizar los cálculos
 
+    /**
+     * Calcula el resultado de una expresión en notación prefija.
+     *
+     * @param expresion Expresión en notación prefija.
+     * @return Resultado de la expresión.
+     */
     public Integer calcularPrefijo(String expresion) {
-        String[] val = expresion.split(" ");
+        String[] val = expresion.split(" "); // Divide la expresión en tokens
 
-        stack = new Stack<Integer>();
+        stack = new Stack<Integer>(); // Inicializa la pila
 
-        boolean flag = true;
+        boolean flag = true; // Bandera para controlar errores
         int num1;
         int num2;
         int result = 0;
 
-        for (int i = val.length - 1; i >= 0; i--) { // Recorrer la expresion
-            if (Arrays.asList(operators).contains(val[i])) { // Si es Operador
-                if (stack.count() >= 2) { // Si hay dos o mas en la pila es porque se pueden hacer operaciones
-
-                    // Sacar los dos ultimos numeros
+        // Recorre la expresión de derecha a izquierda
+        for (int i = val.length - 1; i >= 0; i--) {
+            if (Arrays.asList(operators).contains(val[i])) { // Si el token es un operador
+                if (stack.count() >= 2) { // Verifica si hay suficientes operandos en la pila
+                    // Obtiene los dos últimos números de la pila
                     num1 = stack.pop();
                     num2 = stack.pop();
                     switch (val[i]) {
                         case "+": // Suma
                             stack.push(num1 + num2);
                             break;
-
                         case "-": // Resta
                             stack.push(num1 - num2);
                             break;
-
-                        case "*": // Multiplicacion
+                        case "*": // Multiplicación
                             stack.push(num1 * num2);
                             break;
-
-                        case "/": // Division
-                            if (num1 != 0) // Si el numero es ≠ 0 se puede hacer la division
+                        case "/": // División
+                            if (num1 != 0) // Evita la división por cero
                                 stack.push(num1 / num2);
-                            else { // Division indefinida
-                                System.out.println("Error: Division entre cero");
+                            else { // Maneja el error de división por cero
+                                System.out.println("Error: División entre cero");
                                 return null;
                             }
                             break;
-
                     }
-                } else { // Faltan numeros
-                    System.out.println("Error: Le faltaron operandos");
+                } else { // Maneja el error de falta de operandos
+                    System.out.println("Error: Faltan operandos");
                     flag = false;
                 }
-            } else { // No ingreso datos
+            } else { // Si el token es un número, lo apila
                 stack.push(Integer.parseInt(val[i]));
             }
         }
-        if (stack.count() == 1 && flag) // Si se tiene un elemento en pila
+        // Si queda un único elemento en la pila, es el resultado
+        if (stack.count() == 1 && flag)
             result = stack.pop();
-        else if (!flag) // Si se tinen mas elementos es porque faltaron operadores
+        else if (!flag) // Si hubo errores de operandos faltantes
             return null;
-        else {
-            System.out.println("Error: Le faltaron operadores");
+        else { // Si quedaron operadores sin usar
+            System.out.println("Error: Faltan operadores");
             flag = false;
         }
-        if (flag) // Si la operacion es valida
+        // Si no hubo errores, devuelve el resultado; de lo contrario, devuelve nulo
+        if (flag)
             return result;
-        else // Existe algun error
+        else
             return null;
     }
 }

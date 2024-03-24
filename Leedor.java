@@ -3,10 +3,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase que proporciona funcionalidad para leer y analizar archivos de código Lisp.
+ * Este lector analiza el archivo línea por línea, ignorando comentarios y líneas en blanco,
+ * y construye comandos completos antes de agregarlos a la lista de comandos.
+ * Además, verifica la correcta estructura de los paréntesis en los comandos.
+ *
+ * @author Gabriel Bran
+ * @author David Dominguez
+ * @author Luis Padilla
+ * @since 2024-03-23
+ * @version 1.0
+ */
+
 public class Leedor {
 
-    //Lee un archivo de Lisp y devuelve una lista de comandos sin espacios.
-
+    /**
+     * Lee un archivo de Lisp y devuelve una lista de comandos sin espacios.
+     *
+     * @param file Nombre del archivo a leer.
+     * @return Lista de comandos extraídos del archivo.
+     * @throws RuntimeException Si ocurre un error al leer el archivo o si falta un paréntesis de cierre en el archivo.
+     */
     public ArrayList<String> Parse(String File) {
         ArrayList<String> commands = new ArrayList<>(); //
 
@@ -45,9 +63,12 @@ public class Leedor {
         return commands;
     }
 
-
-    // Cuenta el numero de parentesis en un comando dado
-
+    /**
+     * Cuenta el número de paréntesis en un comando dado.
+     *
+     * @param command Comando a analizar.
+     * @return Número de paréntesis restantes en el comando.
+     */
     private int LosParentesis(String command) {
         int count = 0;
 

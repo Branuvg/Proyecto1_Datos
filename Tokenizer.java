@@ -1,38 +1,56 @@
 import java.util.ArrayList;
 
+/**
+ * Clase que se encarga de tokenizar comandos de Lisp y determinar su tipo de comando.
+ * Los comandos se dividen en tokens para su posterior procesamiento.
+ * Además, determina el tipo de comando que se está utilizando.
+ *
+ * @author Gabriel Bran
+ * @author David Dominguez
+ * @author Luis Padilla
+ * @since 2024-03-23
+ * @version 1.0
+ */
 public class Tokenizer {
 
-    
-     // de string de un comando dado, a un array de caracteres
-    protected ArrayList<Character> stringToChar(String command){
+    /**
+     * Convierte un comando dado en una cadena de caracteres a un ArrayList de caracteres.
+     *
+     * @param command Comando en forma de cadena de caracteres.
+     * @return ArrayList de caracteres que representa el comando.
+     */
+    protected ArrayList<Character> stringToChar(String command) {
         ArrayList<Character> characters = new ArrayList<Character>();
-        for (int i =0 ; i < command.length(); i++){
+        for (int i = 0; i < command.length(); i++) {
             characters.add(command.charAt(i));
         }
         return characters;
     }
 
-    
-    // crear los tokens segun  comando dado
-    public ArrayList<String> Tokens(String command){
+    /**
+     * Crea tokens a partir de un comando dado.
+     *
+     * @param command Comando en forma de cadena de caracteres.
+     * @return ArrayList de tokens que representa el comando.
+     */
+    public ArrayList<String> Tokens(String command) {
         String temp = "";
         ArrayList<String> commands = new ArrayList<String>();
         ArrayList<Character> characters = new ArrayList<Character>();
         characters.addAll(stringToChar(command));
-        for (Character current_char: characters){
-            if(current_char == '(');
-            else{
-                if(current_char == ')'){
-                    if(temp !=""){
+        for (Character current_char : characters) {
+            if (current_char == '(') ;
+            else {
+                if (current_char == ')') {
+                    if (!temp.equals("")) {
                         commands.add(temp);
                         temp = "";
                     }
-                }
-                else{
+                } else {
                     if (current_char != ' ')
-                        temp += current_char+"";
-                    else{
-                        if(temp != ""){
+                        temp += current_char + "";
+                    else {
+                        if (!temp.equals("")) {
                             commands.add(temp);
                             temp = "";
                         }
@@ -40,34 +58,48 @@ public class Tokenizer {
                 }
             }
         }
-        
         return commands;
     }
 
-    
-     // dovolver un numero segun que se comando sed debe ejecutar
-    public int getCommandType(ArrayList<String> command){
+    /**
+     * Devuelve un número según el tipo de comando que se debe ejecutar.
+     *
+     * @param command Comando en forma de lista de tokens.
+     * @return Entero que representa el tipo de comando.
+     *         - 1 para 'setq'
+     *         - 2 para operaciones aritméticas ('+', '-', '*', '/')
+     *         - 3 para comandos de impresión ('print', "'", 'quote')
+     *         - 4 para la operación '>'
+     *         - 5 para la operación '<'
+     *         - 6 para la operación 'equals' o '='
+     *         - 7 para el comando 'Atom'
+     *         - 8 para el comando 'List'
+     *         - 9 para el comando 'Cond'
+     *         - 10 para el comando 'defun'
+     *         - -1 si no se encuentra la expresión
+     */
+    public int getCommandType(ArrayList<String> command) {
         if (command.get(0).contains("setq"))
             return 1;
-        else if (command.get(0).contains("+")||command.get(0).contains("-")||command.get(0).contains("*")||command.get(0).contains("/"))
+        else if (command.get(0).contains("+") || command.get(0).contains("-") || command.get(0).contains("*") || command.get(0).contains("/"))
             return 2;
-        else if (command.get(0).contains("'")||command.get(0).contains("quote")||command.get(0).contains("print"))
+        else if (command.get(0).contains("'") || command.get(0).contains("quote") || command.get(0).contains("print"))
             return 3;
-        else if(command.get(0).contains(">"))
+        else if (command.get(0).contains(">"))
             return 4;
-        else if(command.get(0).contains("<"))
+        else if (command.get(0).contains("<"))
             return 5;
-        else if(command.get(0).contains("equals")||command.get(0).contains("="))
+        else if (command.get(0).contains("equals") || command.get(0).contains("="))
             return 6;
-        else if(command.get(0).contains("Atom"))
+        else if (command.get(0).contains("Atom"))
             return 7;
-        else if(command.get(0).contains("List"))
+        else if (command.get(0).contains("List"))
             return 8;
-        else if(command.get(0).contains("Cond"))
+        else if (command.get(0).contains("Cond"))
             return 9;
         else if (command.get(0).contains("defun"))
             return 10;
         else
-            return -1; // Si no encuentra la expresion
+            return -1; // Si no encuentra la expresión
     }
 }

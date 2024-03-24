@@ -1,3 +1,17 @@
+/**
+ * Esta clase implementa un intérprete para un lenguaje Lisp simplificado.
+ * 
+ * <p>
+ * La clase permite evaluar expresiones, crear variables, definir funciones y utilizar la estructura condicional Cond.
+ * </p>
+ *
+ * @author Gabriel Bran
+ * @author David Dominguez
+ * @author Luis Padilla
+ * @since 2024-03-23
+ * @version 1.0
+ */
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -8,21 +22,23 @@ import java.util.regex.Pattern;
 public class Interprete {
 
     private HashMap<String, String> variables = new HashMap<String, String>();
-    
     private PrefixCalc PrefixCalculator = new PrefixCalc();
-
     private Operator Operaciones = new Operator();
-
     private ArrayList<String> instructions = new ArrayList<String>(Arrays.asList("setq", "print", "+", "-", "*", "/",
             "'", "quote", ">", "<", "equals", "=", "Atom", "List", "Cond", "defun"));
     private ArrayList<String> FunctionsNames = new ArrayList<String>();
-
     private Tokenizer tokenizer = new Tokenizer();
     private HashMap<String, ArrayList<String>> functions = new HashMap<String, ArrayList<String>>();
     private HashMap<String, LinkedHashMap<String, String>> parameters = new HashMap<String, LinkedHashMap<String, String>>();
     private boolean end = false;
     private int created_instructions = 1;
 
+    /**
+     * Realiza operaciones basadas en el código de entrada.
+     * @param commands Lista de comandos a interpretar.
+     * @param option Opción de operación a realizar.
+     * @return Resultado de la operación.
+     */
     public String operate(ArrayList<String> commands, int option){
         if (!end){
             String expresion = "";
@@ -56,18 +72,21 @@ public class Interprete {
                     if (isHere(instructions, commands.get(0)))
                         return useFunction(convertToArrayList(expresion));
                     else
-                        return "ERROR: Ha ingresado una instrucción inválida";
+                        return "instrucción inválida";
                 }
             }
             else
-                return "ERROR: La variable no ha sido creada";
+                return "La variable no ha sido creada";
         }
         else{
-            return "-----------";
+            return "........................";
         }
     }
 
-
+    /**
+     * Define una nueva función en el intérprete.
+     * @param command Lista de comandos que definen la función.
+     */
     public void newFunction(ArrayList<String> command){
         String name = command.get(1);
         this.instructions.add(name); 
@@ -99,8 +118,12 @@ public class Interprete {
         }
         functions.put(name, instrucciones); 
     }
-
     
+    /**
+     * Utiliza una función definida previamente en el intérprete.
+     * @param commands Lista de comandos para la función.
+     * @return Resultado de la función.
+     */
     public String useFunction(ArrayList<String> commands){
         String name = commands.get(0);
         String result = "";
@@ -185,7 +208,11 @@ public class Interprete {
         return result;
     }
 
-
+    /**
+     * Define una nueva variable en el intérprete.
+     * @param command Lista de comandos para definir la variable.
+     * @return Nombre y valor de la variable definida.
+     */
     public String newVariable(ArrayList<String> command){
         String name = command.get(1);
         String value = "";
@@ -205,8 +232,11 @@ public class Interprete {
         return name +": " + value;
     }
 
-
-    
+    /**
+     * Retorna una expresión entre comillas de una función.
+     * @param func Función a citar.
+     * @return Función citada.
+     */
     public String quote(String func){
         String value = "";
         String[] tokens = func.split("");
@@ -228,8 +258,11 @@ public class Interprete {
         return value;
     }
 
-
-    
+    /**
+     * Verifica la existencia de una variable en el intérprete.
+     * @param name Nombre de la variable.
+     * @return Valor de la variable si existe, de lo contrario null.
+     */
     private String verifyVariable(String name){
         String variable = null;
         if(variables.containsKey(name))
@@ -237,14 +270,19 @@ public class Interprete {
         return variable;
     }
 
-
+    /**
+     * Retorna la lista de instrucciones disponibles en el intérprete.
+     * @return Lista de instrucciones.
+     */
     public ArrayList<String> getInstructions(){
         return this.instructions;
     }
 
-
-
-    
+    /**
+     * Implementa la funcionalidad del condicional Lisp.
+     * @param lisp Lista de comandos Lisp.
+     * @return Resultado del condicional.
+     */
     public String cond(ArrayList<String> lisp){
         String conditional = "";
         String condition = lisp.get(1) + " ";
@@ -326,8 +364,12 @@ public class Interprete {
         return conditional;
     }
 
-
-    
+    /**
+     * Verifica si una instrucción está presente en una lista de instrucciones.
+     * @param instructions Lista de instrucciones.
+     * @param default_instructions Instrucción a verificar.
+     * @return true si la instrucción está presente, de lo contrario false.
+     */    
     private boolean isHere(ArrayList<String> instructions, String default_instructions){
         boolean flag = false;
         for (int i = 0; i < instructions.size() && flag == false; i++)
@@ -336,7 +378,11 @@ public class Interprete {
         return flag;
     }
 
-    
+    /**
+     * Convierte una cadena de comandos en una lista de comandos.
+     * @param command Cadena de comandos.
+     * @return Lista de comandos.
+     */    
     private ArrayList<String> convertToArrayList(String command){
         String[] splitedExpression = command.split(" ");
         ArrayList<String> evaExpression = new ArrayList<String>();
@@ -345,7 +391,11 @@ public class Interprete {
         return evaExpression;
     }
 
-    
+    /**
+     * Busca variables en una cadena de comandos y las reemplaza por sus valores si existen.
+     * @param command Cadena de comandos.
+     * @return Cadena de comandos con variables reemplazadas por sus valores.
+     */
     private String findVariables(String command){
         String newExpression = "";
         String variable = "";
@@ -369,7 +419,11 @@ public class Interprete {
         return newExpression;
     }
 
-
+    /**
+     * Define una nueva variable en el intérprete utilizando el comando setq de Lisp.
+     * @param lisp Lista de comandos Lisp.
+     * @return Nombre y valor de la variable definida.
+     */
     public String setQ(ArrayList<String> lisp){
         String name =  lisp.get(1);
         String value = "";

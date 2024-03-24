@@ -1,8 +1,18 @@
-
+/**
+ * Clase que proporciona operaciones para evaluar expresiones Lisp.
+ * @author Gabriel Bran
+ * @author David Dominguez
+ * @author Luis Padilla
+ * @since 2024-03-23
+ * @version 1.0
+ */
 public class Operator {
 
-    // esta clase debe ser intanciada como SmoothOperator
-
+    /**
+     * Compara dos valores para verificar si son iguales.
+     * @param input Expresión que contiene los valores a comparar.
+     * @return "True" si los valores son iguales, "False" de lo contrario.
+     */
     public String equals(String input) {
         String value = "";
         String value2 = "";
@@ -24,6 +34,11 @@ public class Operator {
 
     }
 
+    /**
+     * Comprueba si el primer valor es menor que el segundo.
+     * @param lisp Expresión que contiene los valores a comparar.
+     * @return "True" si el primer valor es menor que el segundo, "False" de lo contrario.
+     */
     public String isSmaller(String lisp) {
         int value = 0;
         int value2 = 0;
@@ -46,6 +61,11 @@ public class Operator {
 
     }
 
+    /**
+     * Comprueba si el primer valor es mayor que el segundo.
+     * @param lisp Expresión que contiene los valores a comparar.
+     * @return "True" si el primer valor es mayor que el segundo, "False" de lo contrario.
+     */
     public String isBigger(String lisp) {
         int value = 0;
         int value2 = 0;
@@ -68,6 +88,11 @@ public class Operator {
 
     }
 
+    /**
+     * Verifica si la expresión es un átomo.
+     * @param lisp Expresión a verificar.
+     * @return "True" si la expresión es un átomo, "NIL" de lo contrario.
+     */
     public String isAtom(String lisp) {
 
         String atom = "NIL";
@@ -82,6 +107,11 @@ public class Operator {
         return atom;
     }
 
+    /**
+     * Verifica si la expresión es una lista.
+     * @param lisp Expresión a verificar.
+     * @return "True" si la expresión es una lista, "NIL" de lo contrario.
+     */
     public String isList(String lisp) {
         String list = "NIL";
         String[] analyse = lisp.split(" ");
