@@ -186,7 +186,24 @@ public class Interprete {
     }
 
 
-
+    public String newVariable(ArrayList<String> command){
+        String name = command.get(1);
+        String value = "";
+        for (int i = 2; i < command.size(); i++){
+            String operation = "";
+            if (isHere(instructions, command.get(i))){
+                for (int j = i; j < command.size(); j++){
+                    operation += command.get(j) + " ";
+                }
+                value = operate(convertToArrayList(operation), tokenizer.getCommandType(convertToArrayList(operation)));
+                i = command.size();
+            }
+            else
+                value = command.get(i);
+        }
+        variables.put(name, value);
+        return name +": " + value;
+    }
 
 
     
