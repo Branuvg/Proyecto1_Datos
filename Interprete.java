@@ -47,7 +47,7 @@ public class Interprete {
                 else if (option == 8)
                     return Operaciones.isList(expresion);
                 else if (option == 9)
-                    return Condicionales(commands);
+                    return cond(commands);
                 else if (option == 10){
                     newFunction(convertToArrayList(expresion));
                     return "";
@@ -234,51 +234,51 @@ public class Interprete {
 
 
     // Metodo que evalua condicionales
-    public String Condicionales(ArrayList<String> cond_exp){
+    public String cond(ArrayList<String> lisp){
         String conditional = "";
-        String condition = cond_exp.get(1) + " ";
-        int numeroCondiciones = 0;
+        String condition = lisp.get(1) + " ";
+        int condCount = 0;
         String positive = "";
         String negative = "";
         boolean positivo = false;
         boolean optimizar = false;
 
-        for (int i = 2; i < cond_exp.size(); i++) {
+        for (int i = 2; i < lisp.size(); i++) {
 
             //Optimizar la condicion
-            if (numeroCondiciones == 2)
+            if (condCount == 2)
                 if (operate(convertToArrayList(condition), tokenizer.getCommandType(convertToArrayList(condition))).equals("verdadero"))
                     optimizar = true;
-            if (!isHere(getInstructions(), cond_exp.get(i)) && numeroCondiciones != 2){
-                condition += cond_exp.get(i) + " ";
-                numeroCondiciones++;
+            if (!isHere(getInstructions(), lisp.get(i)) && condCount != 2){
+                condition += lisp.get(i) + " ";
+                condCount++;
             }
-            else if(numeroCondiciones != 2){
-                String expression = cond_exp.get(i) + " ";
+            else if(condCount != 2){
+                String expression = lisp.get(i) + " ";
                 boolean flag = true;
                 int cont = 0;
-                for (int j = i+1; j < cond_exp.size() && flag; j++){
-                    if (!isHere(getInstructions(),cond_exp.get(j))){
-                        expression += cond_exp.get(j) + " ";
+                for (int j = i+1; j < lisp.size() && flag; j++){
+                    if (!isHere(getInstructions(),lisp.get(j))){
+                        expression += lisp.get(j) + " ";
                         cont++;
                     }
                     else
                         flag = false;
                 }
                 condition += operate(convertToArrayList(expression), tokenizer.getCommandType(convertToArrayList(expression)));
-                numeroCondiciones++;
+                condCount++;
                 i += cont;
             }
 
             //Expresion positiva
-            else if (numeroCondiciones == 2 && !positivo){
-                if (isHere(getInstructions(),cond_exp.get(i)))
-                    positive = cond_exp.get(i) + " ";
+            else if (condCount == 2 && !positivo){
+                if (isHere(getInstructions(),lisp.get(i)))
+                    positive = lisp.get(i) + " ";
                 boolean flag = true;
                 int cont = 0;
-                for (int j = i+1; j < cond_exp.size() && flag; j++){
-                    if (!isHere(getInstructions(),cond_exp.get(j))){
-                        positive += cond_exp.get(j) + " ";
+                for (int j = i+1; j < lisp.size() && flag; j++){
+                    if (!isHere(getInstructions(),lisp.get(j))){
+                        positive += lisp.get(j) + " ";
                         cont++;
                     }
                     else
@@ -289,20 +289,20 @@ public class Interprete {
             }
 
             //Expresion negativa
-            else if (numeroCondiciones == 2 && positivo && !optimizar){
-                if (isHere(getInstructions(),cond_exp.get(i)))
-                    negative = cond_exp.get(i) + " ";
+            else if (condCount == 2 && positivo && !optimizar){
+                if (isHere(getInstructions(),lisp.get(i)))
+                    negative = lisp.get(i) + " ";
                 String function = "";
-                for (int j = i+1; j < cond_exp.size(); j++){
-                    if (isHere(instructions, cond_exp.get(j))){
-                        for (int k = j; k < cond_exp.size(); k++){
-                            function += cond_exp.get(k) + " ";
+                for (int j = i+1; j < lisp.size(); j++){
+                    if (isHere(instructions, lisp.get(j))){
+                        for (int k = j; k < lisp.size(); k++){
+                            function += lisp.get(k) + " ";
                         }
-                        created_instructions *= Integer.parseInt(cond_exp.get(j+2));
+                        created_instructions *= Integer.parseInt(lisp.get(j+2));
                         negative += operate(convertToArrayList(function), tokenizer.getCommandType(convertToArrayList(function)));
                     }
                     else{
-                        negative += cond_exp.get(j) + " ";
+                        negative += lisp.get(j) + " ";
                     }
                 }
                 break;
@@ -377,12 +377,5 @@ public class Interprete {
         variables.put(name, value);
         return name +": " + value;
         
-    }
-
-
-    public String cond(){
-        String cond = "";
-
-        return cond;
     }
 }
