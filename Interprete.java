@@ -68,19 +68,17 @@ public class Interprete {
     }
 
 
-    // Crea una nueva funcion a partir de un comando
     public void newFunction(ArrayList<String> command){
         String name = command.get(1);
-        this.instructions.add(name); //Agregar la funcion a una instruccion valida
+        this.instructions.add(name); 
         FunctionsNames.add(name);
         ArrayList<String> instrucciones = new ArrayList<String>();
         LinkedHashMap<String, String> parametersFunction = new LinkedHashMap<String, String>();
-        String[] parametersSplited = command.get(2).trim().split(","); //Parametros
+        String[] parametersSplited = command.get(2).trim().split(","); 
         for(String parameter: parametersSplited)
-            parametersFunction.put(parameter, ""); //Indicar variables de la funcion
+            parametersFunction.put(parameter, "");
         this.parameters.put(name, parametersFunction);
 
-        //Verifica si existen otras instrucciones
         for (int i = 3; i < command.size(); i++){
             String expresion = "";
             if (isHere(getInstructions(), command.get(i))){
@@ -99,10 +97,10 @@ public class Interprete {
             }
             instrucciones.add(expresion);
         }
-        functions.put(name, instrucciones); //Agregar la funcion
+        functions.put(name, instrucciones); 
     }
 
-    // Metodo que utiliza una funcion anteriormente creada
+    
     public String useFunction(ArrayList<String> commands){
         String name = commands.get(0);
         String result = "";
@@ -129,13 +127,13 @@ public class Interprete {
 
             newParameters.add(parameters);
         }
-        //Asignacion de parametros de la funcion
+        
         String[] parametersSplited = parameters.split(" ");
         ArrayList<String> instructions = functions.get(name);
         LinkedHashMap<String, String> parametersFunction = this.parameters.get(name);
         String instrucciones = "";
 
-        //Separacion de instrucciones de la funcion
+        
         for (int i = 0; i < instructions.size(); i++){
             instrucciones += instructions.get(i).trim() + " ";
         }
@@ -148,7 +146,7 @@ public class Interprete {
                 i++;
             }
         }
-        //Ejecucion de comandos
+        
         ArrayList<String> evaExpression = convertToArrayList(instrucciones);
         ArrayList<String> newInstructions = new ArrayList<String>();
         for (int i = 0; i < evaExpression.size(); i++){
@@ -191,7 +189,7 @@ public class Interprete {
 
 
 
-    // Ejecucion del comando quote
+    
     public String quote(String func){
         String value = "";
         String[] tokens = func.split("");
@@ -214,7 +212,7 @@ public class Interprete {
     }
 
 
-    // Verifica si existe la variable
+    
     private String verifyVariable(String name){
         String variable = null;
         if(variables.containsKey(name))
@@ -223,17 +221,13 @@ public class Interprete {
     }
 
 
-    /**
-     * Devuelve el listado de instrucciones
-     * @return el listado de instrucciones
-     */
     public ArrayList<String> getInstructions(){
         return this.instructions;
     }
 
 
 
-    // Metodo que evalua condicionales
+    
     public String cond(ArrayList<String> lisp){
         String conditional = "";
         String condition = lisp.get(1) + " ";
@@ -245,7 +239,7 @@ public class Interprete {
 
         for (int i = 2; i < lisp.size(); i++) {
 
-            //Optimizar la condicion
+            
             if (condCount == 2)
                 if (operate(convertToArrayList(condition), tokenizer.getCommandType(convertToArrayList(condition))).equals("verdadero"))
                     optimizar = true;
@@ -270,7 +264,7 @@ public class Interprete {
                 i += cont;
             }
 
-            //Expresion positiva
+            
             else if (condCount == 2 && !positivo){
                 if (isHere(getInstructions(),lisp.get(i)))
                     positive = lisp.get(i) + " ";
@@ -288,7 +282,7 @@ public class Interprete {
                 i += cont;
             }
 
-            //Expresion negativa
+            
             else if (condCount == 2 && positivo && !optimizar){
                 if (isHere(getInstructions(),lisp.get(i)))
                     negative = lisp.get(i) + " ";
@@ -316,7 +310,7 @@ public class Interprete {
     }
 
 
-    // verificar si es una instruccion o no
+    
     private boolean isHere(ArrayList<String> instructions, String default_instructions){
         boolean flag = false;
         for (int i = 0; i < instructions.size() && flag == false; i++)
@@ -325,7 +319,7 @@ public class Interprete {
         return flag;
     }
 
-    // convertir un string a un arraylist
+    
     private ArrayList<String> convertToArrayList(String command){
         String[] splitedExpression = command.split(" ");
         ArrayList<String> evaExpression = new ArrayList<String>();
@@ -334,13 +328,13 @@ public class Interprete {
         return evaExpression;
     }
 
-    //Encontrar las variables en una command y convertirlas a su valor
+    
     private String findVariables(String command){
         String newExpression = "";
         String variable = "";
         String[] parts = command.split(" ");
         for (int i = 0; i < parts.length; i++){
-            //Valores de variables
+            
             Pattern pattern = Pattern.compile("([a-z]+)", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(parts[i]);
 
