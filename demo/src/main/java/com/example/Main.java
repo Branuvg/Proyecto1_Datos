@@ -20,12 +20,14 @@ public class Main {
     public static void main(String[] args) {
         Tokenizer tokenizer = new Tokenizer();
         Leedor fileScanner = new Leedor();
-        String file = "Lisp.txt";
+        String file = "demo\\src\\main\\java\\com\\example\\Lisp.txt";
         Interprete interprete = new Interprete();
         ArrayList<ArrayList<String>> tokens = new ArrayList<ArrayList<String>>();
         String var;
 
+        System.out.println("-------------------------");
         System.out.println("Interprete de LISP");
+        System.out.println("-------------------------");
 
         // Lee el archivo de LISP y obtiene las expresiones
         ArrayList<String> expresions = fileScanner.Parse(file);
