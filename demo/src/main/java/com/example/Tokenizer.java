@@ -20,7 +20,7 @@ public class Tokenizer {
      * @param command Comando en forma de cadena de caracteres.
      * @return ArrayList de caracteres que representa el comando.
      */
-    protected ArrayList<Character> stringToChar(String command) {
+    public ArrayList<Character> stringToChar(String command) {
         ArrayList<Character> characters = new ArrayList<Character>();
         for (int i = 0; i < command.length(); i++) {
             characters.add(command.charAt(i));
