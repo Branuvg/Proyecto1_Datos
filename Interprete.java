@@ -9,10 +9,8 @@ public class Interprete {
 
     private HashMap<String, String> variables = new HashMap<String, String>();
     
-    //aritmethicOperation
     private PrefixCalc PrefixCalculator = new PrefixCalc();
 
-    //LispLogicFuction
     private Operator Operaciones = new Operator();
 
     private ArrayList<String> instructions = new ArrayList<String>(Arrays.asList("setq", "print", "+", "-", "*", "/",
@@ -33,7 +31,7 @@ public class Interprete {
             if(findVariables(expresion) != null){
                 expresion = findVariables(expresion);
                 if (option == 1)
-                    return newVariable(commands);
+                    return setQ(commands);
                 else if (option == 2)
                     return PrefixCalculator.calcularPrefijo(expresion) + "";
                 else if (option == 3)
@@ -190,25 +188,7 @@ public class Interprete {
     }
 
 
-    // Crea una nueva variable basada en el comando
-    public String newVariable(ArrayList<String> command){
-        String name = command.get(1);
-        String value = "";
-        for (int i = 2; i < command.size(); i++){
-            String operation = "";
-            if (isHere(instructions, command.get(i))){
-                for (int j = i; j < command.size(); j++){
-                    operation += command.get(j) + " ";
-                }
-                value = operate(convertToArrayList(operation), tokenizer.getCommandType(convertToArrayList(operation)));
-                i = command.size();
-            }
-            else
-                value = command.get(i);
-        }
-        variables.put(name, value);
-        return name +": " + value;
-    }
+
 
 
     // Ejecucion del comando quote
@@ -379,8 +359,23 @@ public class Interprete {
     }
 
 
-    public void setQ(ArrayList<String> lisp){
+    public String setQ(ArrayList<String> lisp){
         String name =  lisp.get(1);
+        String value = "";
+        for (int i = 2; i < lisp.size(); i++){
+            String operation = "";
+            if (isHere(instructions, lisp.get(i))){
+                for (int j = i; j < lisp.size(); j++){
+                    operation += lisp.get(j) + " ";
+                }
+                value = operate(convertToArrayList(operation), tokenizer.getCommandType(convertToArrayList(operation)));
+                i = lisp.size();
+            }
+            else
+                value = lisp.get(i);
+        }
+        variables.put(name, value);
+        return name +": " + value;
         
     }
 
