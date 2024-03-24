@@ -39,9 +39,9 @@ public class Interprete {
                 else if (option == 3)
                     return quote(expresion);
                 else if (option == 4)
-                    return Operaciones.mayorComparar(expresion);
+                    return Operaciones.isBigger(expresion);
                 else if (option == 5)
-                    return Operaciones.menorComparar(expresion);
+                    return Operaciones.isSmaller(expresion);
                 else if (option == 6)
                     return Operaciones.equals(expresion);
                 else if (option == 7)
@@ -212,20 +212,25 @@ public class Interprete {
 
 
     // Ejecucion del comando quote
-    public String quote(String command){
-        String finalExpression ="";
-        String[] expresionSplit = command.split(" ");
-        int i =0;
-        for(i =0; i <expresionSplit.length-1;i++){
-            if(expresionSplit[i].equals("quote")||expresionSplit[i].equals("'")){
+    public String quote(String func){
+        String value = "";
+        String[] tokens = func.split("");
+        int control=0;
+        for(int i = 0; i < tokens.length-1; i++){
+            if(tokens[i].equals("quote")||tokens[i].equals("QUOTE")||tokens[i].equals("'")){
                 i++;
-                break;
+                control = i;
             }
         }
-        for(int j = i ; j<=expresionSplit.length-1; j++) {
-            finalExpression += expresionSplit[j] + " ";
+        for(int n = control; n< tokens.length-1;n++ ){
+            if(n == tokens.length-2){
+                value = value + tokens[n];
+            }
+            else {
+                value = value + tokens[n]+" ";
+            }
         }
-        return finalExpression.trim();
+        return value;
     }
 
 
@@ -379,26 +384,6 @@ public class Interprete {
         
     }
 
-    public String quote(String func){
-        String value = "";
-        String[] tokens = func.split("");
-        int control=0;
-        for(int i = 0; i < tokens.length-1; i++){
-            if(tokens[i].equals("quote")||tokens[i].equals("QUOTE")||tokens[i].equals("'")){
-                i++;
-                control = i;
-            }
-        }
-        for(int n = control; n< tokens.length-1;n++ ){
-            if(n == tokens.length-2){
-                value = value + tokens[n];
-            }
-            else {
-                value = value + tokens[n]+" ";
-            }
-        }
-        return value;
-    }
 
     public String cond(){
         String cond = "";
