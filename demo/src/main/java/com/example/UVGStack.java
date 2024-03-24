@@ -1,3 +1,4 @@
+package com.example;
 /**
  * Interfaz que define las operaciones básicas de una stack genérica.
  * Esta interfaz proporciona métodos para agregar elementos, quitar elementos,
