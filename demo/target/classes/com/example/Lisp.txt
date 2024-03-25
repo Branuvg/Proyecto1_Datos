@@ -3,27 +3,27 @@
 (* 10 2)
 (/ 10 2)
 
-(setq vara 20)
-(setq varb 8)
-(setq varc 4)
+(setq a 20)
+(setq b 8)
+(setq c 4)
 
-(+ vara varb)
-(- vara varb)
-(* vara varc)
-(/ vara varc)
+(+ a b)
+(- a b)
+(* a c)
+(/ a c)
 
 (' prueba con quuote)
 (quote 7)
 
 (> 20 8)
-(equals varc 4)
+(equals c 4)
 (Atom y)
 (List (4 5 6))
 (List (x))
 (List (4 5 6))
 
-(Cond equals vara 20 varb 8)(* 8 4) (/ 20 4) (- 8 4)
-(print vara)
+(Cond equals a 20 b 8)(* 8 4) (/ 20 4) (- 8 4)
+(print a)
 
 (defun name x,y (+ x y))
 (name 5 7)
